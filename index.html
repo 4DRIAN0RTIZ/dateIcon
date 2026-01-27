@@ -710,7 +710,7 @@
 
 		// Load saved URL or use default
 		const saved = localStorage.getItem(STORAGE_KEY);
-		apiUrlInput.value = saved || 'https://dateicon.cuevaneander.tech';
+		apiUrlInput.value = saved || 'https://dateicon.onrender.com';
 
 		apiUrlInput.addEventListener('change', () => {
 			localStorage.setItem(STORAGE_KEY, apiUrlInput.value.trim());
