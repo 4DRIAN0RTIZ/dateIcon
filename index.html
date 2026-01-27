@@ -5,6 +5,23 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Date Icon</title>
+	<meta name="description" content="A simple REST API to create customizable date icons with multiple themes and languages.">
+
+	<!-- Facebook Meta Tags -->
+	<meta property="og:url" content="https://dateicon.cuevaneander.tech/">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Date Icon">
+	<meta property="og:description" content="A simple REST API to create customizable date icons with multiple themes and languages.">
+	<meta property="og:image" content="https://dateicon.cuevaneander.tech/static/logo.png">
+
+	<!-- Twitter Meta Tags -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta property="twitter:domain" content="dateicon.cuevaneander.tech">
+	<meta property="twitter:url" content="https://dateicon.cuevaneander.tech/">
+	<meta name="twitter:title" content="Date Icon">
+	<meta name="twitter:description" content="A simple REST API to create customizable date icons with multiple themes and languages.">
+	<meta name="twitter:image" content="https://dateicon.cuevaneander.tech/static/logo.png">
+
 	<link rel="icon" type="image/png" href="/static/logo.png">
 	<style>
 		* {
@@ -691,9 +708,9 @@
 		const coldWarning = document.getElementById('coldWarning');
 		const generateBtn = document.getElementById('generateBtn');
 
-		// Load saved URL
+		// Load saved URL or use default
 		const saved = localStorage.getItem(STORAGE_KEY);
-		if (saved) apiUrlInput.value = saved;
+		apiUrlInput.value = saved || 'https://dateicon.cuevaneander.tech';
 
 		apiUrlInput.addEventListener('change', () => {
 			localStorage.setItem(STORAGE_KEY, apiUrlInput.value.trim());
