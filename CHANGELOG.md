@@ -2,6 +2,16 @@
 
 All notable changes to this project are documented here.
 
+## [Unreleased]
+
+### CI
+
+- Generate docs/changelog.json with unreleased and release workflows ([6e66ad5](https://github.com/4DRIAN0RTIZ/DateIcon/commit/6e66ad517e28ac3481caf5b58a192d9a5beb3cb5))
+
+### Features
+
+- Add static landing with live icon preview ([9332be2](https://github.com/4DRIAN0RTIZ/DateIcon/commit/9332be28ab24a552f4a3656b83723805d67bb6c9))
+
 ## [0.1.0] - 2026-09-02
 
 ### Bug Fixes

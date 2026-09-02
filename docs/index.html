@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Date Icon API</title>
+  <meta name="description" content="PNG date stamps on demand. Themes, languages, sizes.">
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div id="wake" class="wake" hidden>
+    <p class="wake-mark">DATE<span>ICON</span></p>
+    <div class="wake-bar" role="progressbar" aria-label="Waking API"><i></i></div>
+    <p id="wake-msg" class="wake-msg" aria-live="polite">Waking the API…</p>
+    <p class="wake-hint">Render free tier · cold start</p>
+  </div>
+  <header class="top">
+    <p class="mark">DATE<span>ICON</span></p>
+    <nav>
+      <a href="#preview">Preview</a>
+      <a href="#api">API</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="kicker">REST · PNG · cacheable</p>
+        <h1>A calendar cell,<br>as an endpoint.</h1>
+        <p class="pitch">Pass a day and a month. Get a deterministic icon — theme, language, size, or your own hex.</p>
+        <p class="call"><code id="call-path">GET /icon/25_12</code></p>
+      </div>
+      <aside class="hero-stamp" id="preview">
+        <figure>
+          <img id="live-icon" class="live-icon" width="256" height="256" alt="Generated date icon">
+          <figcaption>Live pull from <code>/icon</code></figcaption>
+        </figure>
+        <div class="dials">
+          <label>day
+            <input id="day" type="number" min="1" max="31" value="25">
+          </label>
+          <label>month
+            <input id="month" type="number" min="1" max="12" value="12">
+          </label>
+          <label>theme
+            <select id="theme">
+              <option>default</option>
+              <option>dark</option>
+              <option>ocean</option>
+              <option>forest</option>
+              <option>sunset</option>
+            </select>
+          </label>
+          <label>lang
+            <select id="lang">
+              <option>es</option>
+              <option selected>en</option>
+              <option>fr</option>
+              <option>de</option>
+              <option>pt</option>
+            </select>
+          </label>
+        </div>
+      </aside>
+    </section>
+
+    <section class="api" id="api">
+      <h2>Endpoints</h2>
+      <ul class="routes">
+        <li><code>GET /</code><span>map of routes</span></li>
+        <li><code>GET /health</code><span>liveness</span></li>
+        <li class="shift"><code>GET /icon/{DD_MM}</code><span>PNG stamp</span></li>
+        <li><code>GET /themes</code><span>palette names</span></li>
+        <li class="shift"><code>GET /languages</code><span>month locales</span></li>
+        <li><code>GET /sizes</code><span>16 … 1024 px</span></li>
+      </ul>
+      <pre class="sample">GET /icon/25_12?theme=sunset&amp;lang=es&amp;size=128</pre>
+    </section>
+
+    <section id="roadmap" hidden></section>
+    <section id="changelog" hidden></section>
+  </main>
+
+  <footer>
+    <p>Date Icon API · deterministic PNGs</p>
+    <p class="fine">No build step. Static docs.</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
