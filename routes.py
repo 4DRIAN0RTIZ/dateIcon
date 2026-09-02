@@ -79,3 +79,9 @@ def list_languages():
 def list_sizes():
     """List all allowed icon sizes."""
     return {"sizes": SIZES_ALLOWED}
+
+
+@router.get("/health")
+def health():
+    """Liveness probe for uptime checks and Render health checks."""
+    return {"status": "ok"}

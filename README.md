@@ -10,6 +10,7 @@ API REST para generar iconos de fecha personalizables con diferentes temas, idio
 | Endpoint | Descripcion |
 |----------|-------------|
 | `GET /` | Informacion de la API |
+| `GET /health` | Chequeo de estado (liveness) |
 | `GET /icon/{date}` | Genera icono de fecha (formato: `DD_MM`) |
 | `GET /themes` | Lista de temas disponibles |
 | `GET /languages` | Lista de idiomas disponibles |
