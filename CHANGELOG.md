@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here.
 
+## [0.3.0] - 2026-09-02
+
+### Features
+
+- Show latest release version in the footer ([c8e3997](https://github.com/4DRIAN0RTIZ/DateIcon/commit/c8e39974c76fe608dd6be064c1cc86ba7f8a6139))
+
 ## [0.2.0] - 2026-09-02
 
 ### CI
