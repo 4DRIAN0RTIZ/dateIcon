@@ -2,11 +2,15 @@
 
 All notable changes to this project are documented here.
 
-## [Unreleased]
+## [0.2.0] - 2026-09-02
 
 ### CI
 
 - Generate docs/changelog.json with unreleased and release workflows ([6e66ad5](https://github.com/4DRIAN0RTIZ/DateIcon/commit/6e66ad517e28ac3481caf5b58a192d9a5beb3cb5))
+
+### Chore
+
+- Update CHANGELOG.md and docs/changelog.json [skip ci] ([a62a7e9](https://github.com/4DRIAN0RTIZ/DateIcon/commit/a62a7e9eeb38525f37a6aaa523574f5749a3eb94))
 
 ### Features
 
