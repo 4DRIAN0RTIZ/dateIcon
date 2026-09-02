@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented here.
 
-## [Unreleased]
+## [0.1.0] - 2026-09-02
 
 ### Bug Fixes
 
@@ -14,6 +14,10 @@ All notable changes to this project are documented here.
 ### CI
 
 - Add changelog and release workflows ([f22ede2](https://github.com/4DRIAN0RTIZ/DateIcon/commit/f22ede23d0a538acc295a74566920f586ced009d))
+
+### Chore
+
+- Update CHANGELOG.md [skip ci] ([5316dac](https://github.com/4DRIAN0RTIZ/DateIcon/commit/5316dacacac0eedca7f39d542e721d3fbe12d273))
 
 ### Features
 
