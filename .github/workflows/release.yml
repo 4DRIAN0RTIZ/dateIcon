@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths-ignore:
       - CHANGELOG.md
+      - docs/changelog.json
   workflow_dispatch: {}
 
 permissions:
@@ -35,7 +36,6 @@ jobs:
           VERSION="$(echo "${{ steps.bumped.outputs.content }}" | tail -n 1 | tr -d '[:space:]')"
           LATEST_TAG="$(git tag --list 'v*' --sort=-v:refname | head -n 1 || true)"
           if [[ -z "$LATEST_TAG" && ( -z "$VERSION" || "$VERSION" != v* ) ]]; then
-            # No release tags yet: seed the first version.
             VERSION="v0.1.0"
           fi
           echo "Latest tag: ${LATEST_TAG:-none}"
@@ -56,12 +56,21 @@ jobs:
         env:
           OUTPUT: CHANGELOG.md
 
+      - name: Generate docs/changelog.json for the new version
+        if: steps.compute.outputs.released == 'true'
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --tag ${{ steps.compute.outputs.version }} --context
+        env:
+          OUTPUT: docs/changelog.json
+
       - name: Commit, tag and push
         if: steps.compute.outputs.released == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add CHANGELOG.md
+          git add CHANGELOG.md docs/changelog.json
           git commit -m "chore(release): ${{ steps.compute.outputs.version }}"
           git tag -a "${{ steps.compute.outputs.version }}" -m "Release ${{ steps.compute.outputs.version }}"
           git push origin HEAD:main
