@@ -92,7 +92,10 @@ class DateIconService:
         """Generate a date icon image."""
         dd, mm = parse_date(date_str)
 
-        canvas_size = size if size in SIZES_ALLOWED else 64
+        if size not in SIZES_ALLOWED:
+            raise ValueError(f"Invalid size. Allowed sizes: {SIZES_ALLOWED}")
+
+        canvas_size = size
         final_size = canvas_size
 
         scale_factor = 8 if canvas_size <= 32 else (4 if canvas_size < 64 else 1)

@@ -3,6 +3,7 @@ import unittest
 from fastapi.testclient import TestClient
 
 from app import app
+from config import SIZES_ALLOWED
 
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 
@@ -32,6 +33,24 @@ class IconEndpointTests(unittest.TestCase):
     def test_invalid_date_returns_400(self):
         response = client.get("/icon/99_99")
         self.assertEqual(response.status_code, 400)
+
+    def test_allowed_size_returns_png(self):
+        response = client.get("/icon/25_12?size=128")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["content-type"], "image/png")
+        self.assertTrue(response.content.startswith(PNG_SIGNATURE))
+
+    def test_disallowed_size_returns_400_listing_allowed_sizes(self):
+        response = client.get("/icon/25_12?size=100")
+        self.assertEqual(response.status_code, 400)
+        detail = response.json()["detail"]
+        self.assertIn(str(SIZES_ALLOWED), detail)
+        self.assertIn("128", detail)
+        self.assertIn("16", detail)
+
+    def test_non_integer_size_returns_422(self):
+        response = client.get("/icon/25_12?size=abc")
+        self.assertEqual(response.status_code, 422)
 
 
 class MetadataEndpointTests(unittest.TestCase):
