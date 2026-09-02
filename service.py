@@ -7,8 +7,13 @@ from config import THEMES, MONTHS, SIZES_ALLOWED, DEFAULT_FONT_PATH
 
 def parse_hex_color(hex_str: str) -> tuple:
     """Convert hex color string to RGB tuple."""
-    hex_str = hex_str.replace('#', '')
-    return tuple(int(hex_str[i:i+2], 16) for i in (0, 2, 4))
+    digits = hex_str[1:] if hex_str.startswith('#') else hex_str
+    if len(digits) != 6 or any(c not in "0123456789abcdefABCDEF" for c in digits):
+        raise ValueError(
+            f"Invalid hex color: {hex_str!r}. "
+            "Expected 6 hex digits, optionally prefixed with '#'."
+        )
+    return tuple(int(digits[i:i+2], 16) for i in (0, 2, 4))
 
 
 def parse_date(date_str: str) -> tuple:
@@ -92,7 +97,10 @@ class DateIconService:
         """Generate a date icon image."""
         dd, mm = parse_date(date_str)
 
-        canvas_size = size if size in SIZES_ALLOWED else 64
+        if size not in SIZES_ALLOWED:
+            raise ValueError(f"Invalid size. Allowed sizes: {SIZES_ALLOWED}")
+
+        canvas_size = size
         final_size = canvas_size
 
         scale_factor = 8 if canvas_size <= 32 else (4 if canvas_size < 64 else 1)
