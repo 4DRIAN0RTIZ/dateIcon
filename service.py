@@ -7,8 +7,13 @@ from config import THEMES, MONTHS, SIZES_ALLOWED, DEFAULT_FONT_PATH
 
 def parse_hex_color(hex_str: str) -> tuple:
     """Convert hex color string to RGB tuple."""
-    hex_str = hex_str.replace('#', '')
-    return tuple(int(hex_str[i:i+2], 16) for i in (0, 2, 4))
+    digits = hex_str[1:] if hex_str.startswith('#') else hex_str
+    if len(digits) != 6 or any(c not in "0123456789abcdefABCDEF" for c in digits):
+        raise ValueError(
+            f"Invalid hex color: {hex_str!r}. "
+            "Expected 6 hex digits, optionally prefixed with '#'."
+        )
+    return tuple(int(digits[i:i+2], 16) for i in (0, 2, 4))
 
 
 def parse_date(date_str: str) -> tuple:
