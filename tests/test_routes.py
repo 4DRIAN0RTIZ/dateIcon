@@ -18,7 +18,7 @@ class RootEndpointTests(unittest.TestCase):
         self.assertIn("endpoints", body)
         endpoints = body["endpoints"]
         self.assertIsInstance(endpoints, dict)
-        for key in ("/icon/{date}", "/themes", "/languages", "/sizes"):
+        for key in ("/icon/{date}", "/themes", "/languages", "/sizes", "/health"):
             self.assertIn(key, endpoints)
 
 

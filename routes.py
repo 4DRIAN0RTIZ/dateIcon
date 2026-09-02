@@ -45,6 +45,7 @@ def root():
             "/themes": "List available themes",
             "/languages": "List available languages",
             "/sizes": "List allowed sizes",
+            "/health": "Liveness / health check",
         },
         "example": "/icon/25_12?theme=default&lang=es&size=128",
     }
