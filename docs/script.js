@@ -174,4 +174,20 @@
 
   fill("roadmap", "roadmap.json", "Roadmap");
   fill("changelog", "changelog.json", "Changelog");
+
+  fetch("changelog.json")
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      var el = document.getElementById("footer-version");
+      if (!el || !data) return;
+      var version = null;
+      if (Array.isArray(data)) {
+        var tagged = data.find(function (rel) { return rel && rel.version; });
+        version = tagged && tagged.version;
+      } else if (data.version) {
+        version = data.version;
+      }
+      if (version) el.textContent = version;
+    })
+    .catch(function () {});
 })();
