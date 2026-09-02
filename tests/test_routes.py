@@ -52,6 +52,26 @@ class IconEndpointTests(unittest.TestCase):
         response = client.get("/icon/25_12?size=abc")
         self.assertEqual(response.status_code, 422)
 
+    def test_custom_theme_valid_colors_returns_png(self):
+        response = client.get(
+            "/icon/25_12?theme=custom&bar_color=ff0000&bg_color=%23ffffff&text_color=000000"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["content-type"], "image/png")
+        self.assertTrue(response.content.startswith(PNG_SIGNATURE))
+
+    def test_custom_theme_invalid_color_returns_400(self):
+        response = client.get("/icon/25_12?theme=custom&bar_color=xyz")
+        self.assertEqual(response.status_code, 400)
+        detail = response.json()["detail"]
+        self.assertIn("xyz", detail)
+        self.assertIn("hex", detail)
+
+    def test_non_custom_theme_ignores_color_params(self):
+        response = client.get("/icon/25_12?theme=default&bar_color=notacolor")
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.content.startswith(PNG_SIGNATURE))
+
 
 class MetadataEndpointTests(unittest.TestCase):
     def test_themes_returns_expected_key(self):

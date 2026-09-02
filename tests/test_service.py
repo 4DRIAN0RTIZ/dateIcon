@@ -52,6 +52,14 @@ class ParseHexColorTests(unittest.TestCase):
         self.assertEqual(len(result), 3)
         self.assertTrue(all(isinstance(channel, int) for channel in result))
 
+    def test_non_hex_chars_raise(self):
+        with self.assertRaises(ValueError):
+            parse_hex_color("xyz")
+
+    def test_wrong_length_raises(self):
+        with self.assertRaises(ValueError):
+            parse_hex_color("#12345")
+
 
 class DateIconServiceTests(unittest.TestCase):
     def test_generate_returns_bytesio_with_png_signature(self):
