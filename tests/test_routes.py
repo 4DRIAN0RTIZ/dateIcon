@@ -72,6 +72,33 @@ class IconEndpointTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.content.startswith(PNG_SIGNATURE))
 
+    def test_icon_has_cache_headers(self):
+        response = client.get("/icon/25_12")
+        self.assertEqual(response.status_code, 200)
+        cache_control = response.headers["cache-control"].lower()
+        self.assertIn("public", cache_control)
+        self.assertIn("max-age=86400", cache_control)
+        self.assertTrue(response.headers.get("etag"))
+
+    def test_icon_same_query_same_etag(self):
+        first = client.get("/icon/25_12?theme=ocean&size=128")
+        second = client.get("/icon/25_12?theme=ocean&size=128")
+        self.assertEqual(first.status_code, 200)
+        self.assertEqual(second.status_code, 200)
+        self.assertEqual(first.headers["etag"], second.headers["etag"])
+
+    def test_icon_conditional_304(self):
+        first = client.get("/icon/25_12")
+        etag = first.headers["etag"]
+        response = client.get("/icon/25_12", headers={"If-None-Match": etag})
+        self.assertEqual(response.status_code, 304)
+        self.assertEqual(response.content, b"")
+
+    def test_icon_different_query_different_etag(self):
+        first = client.get("/icon/25_12")
+        second = client.get("/icon/26_12")
+        self.assertNotEqual(first.headers["etag"], second.headers["etag"])
+
 
 class MetadataEndpointTests(unittest.TestCase):
     def test_themes_returns_expected_key(self):

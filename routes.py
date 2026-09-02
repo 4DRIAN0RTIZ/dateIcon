@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Query, HTTPException, Request
+import hashlib
+
+from fastapi import APIRouter, Query, HTTPException, Request, Response
 from fastapi.responses import StreamingResponse
 from typing import Optional
 from slowapi import Limiter
@@ -11,6 +13,25 @@ from service import DateIconService
 router = APIRouter()
 icon_service = DateIconService()
 limiter = Limiter(key_func=get_remote_address)
+
+CACHE_CONTROL_VALUE = "public, max-age=86400"
+
+
+def _icon_etag(
+    date: str,
+    theme: str,
+    lang: str,
+    size: int,
+    bar_color: Optional[str],
+    bg_color: Optional[str],
+    text_color: Optional[str],
+) -> str:
+    """Build a stable strong ETag from the effective icon request parameters."""
+    parts = [date, theme, lang, str(size)]
+    if theme == "custom":
+        parts.extend([bar_color or "", bg_color or "", text_color or ""])
+    digest = hashlib.sha256("|".join(parts).encode("utf-8")).hexdigest()[:32]
+    return f'"{digest}"'
 
 
 @router.get("/")
@@ -58,9 +79,18 @@ def generate_icon(
             custom_bg_color=bg_color,
             custom_text_color=text_color,
         )
-        return StreamingResponse(img_io, media_type="image/png")
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+    etag = _icon_etag(
+        date, theme.value, lang.value, size, bar_color, bg_color, text_color
+    )
+    headers = {"Cache-Control": CACHE_CONTROL_VALUE, "ETag": etag}
+
+    if request.headers.get("if-none-match") == etag:
+        return Response(status_code=304, headers=headers)
+
+    return StreamingResponse(img_io, media_type="image/png", headers=headers)
 
 
 @router.get("/themes")
