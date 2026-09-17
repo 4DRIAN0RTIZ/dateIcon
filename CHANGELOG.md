@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here.
 
+## [0.4.0] - 2026-09-04
+
+### Features
+
+- Add public roadmap issue template ([769519a](https://github.com/4DRIAN0RTIZ/DateIcon/commit/769519a4d1db2e1842c9a38eeabff9859b00137f))
+
 ## [0.3.0] - 2026-09-02
 
 ### Features
