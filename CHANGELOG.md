@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here.
 
+## [0.4.2] - 2026-09-17
+
+### Bug Fixes
+
+- Drop pipe-encoded milestone from issue title ([d38e91f](https://github.com/4DRIAN0RTIZ/DateIcon/commit/d38e91f460bffd09f2c0daecaab0dd4a7f730cd6))
+
 ## [0.4.1] - 2026-09-17
 
 ### Bug Fixes
