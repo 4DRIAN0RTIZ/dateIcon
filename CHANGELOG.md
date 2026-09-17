@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here.
 
+## [0.4.1] - 2026-09-17
+
+### Bug Fixes
+
+- Complete issue template and prefix title with [roadmap] ([06f2452](https://github.com/4DRIAN0RTIZ/DateIcon/commit/06f245218dac1f816aec49d424994349c5bcd34c))
+
 ## [0.4.0] - 2026-09-04
 
 ### Features
